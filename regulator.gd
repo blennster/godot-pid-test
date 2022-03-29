@@ -13,12 +13,16 @@ func _ready():
 	pendulum = get_node("../RigidBody2/Spatial")
 	pass # Replace with function body.
 
-
+var enable = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	proccess_x(delta)
-	proccess_z(delta)
+	if Input.is_action_pressed("ui_accept"):
+		enable = !enable
+	
+	if enable:
+		proccess_x(delta)
+		proccess_z(delta)
 
 var cum_err_z: float = 0
 var last_err_z: float = 0
