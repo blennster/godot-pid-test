@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/simrobot.png-e9384691e016e20e6859adb94f758be3.stex"
+path="res://.import/simrobot.png-dbcdc8918c32b5f18736eeb2feff0698.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://html/simrobot.png"
-dest_files=[ "res://.import/simrobot.png-e9384691e016e20e6859adb94f758be3.stex" ]
+source_file="res://docs/simrobot.png"
+dest_files=[ "res://.import/simrobot.png-dbcdc8918c32b5f18736eeb2feff0698.stex" ]
 
 [params]
 

@@ -15,14 +15,24 @@ func _ready():
 
 var enable = true
 
+var x = []
+var y = []
+var cum_delta = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_pressed("ui_accept"):
+	cum_delta += delta
+	
+	if Input.is_action_just_released("toggle_pid"):
 		enable = !enable
+	if Input.is_action_pressed("reload_scene"):
+		get_tree().reload_current_scene()
 	
 	if enable:
-		proccess_x(delta)
-		proccess_z(delta)
+		x = proccess_x(delta)
+		y = proccess_z(delta)
+		if cum_delta > 0.05:
+			cum_delta = 0
+			print([x, y])
 
 var cum_err_z: float = 0
 var last_err_z: float = 0
@@ -44,18 +54,19 @@ func proccess_z(delta):
 	last_err_z = err
 	
 	# Output value
-	var cmpr = p + cum_err_z + d
+	var pid_output = p + cum_err_z + d
 	
 	# Debugging
-	iter_z += 1
+	iter_z += 0
 	if iter_z % 10 == 0:
-		print([p, cum_err_z, d, cmpr])
+		pass
+		#print([p, cum_err_z, d, pid_output])
 
 	# deadzone
-	if abs(cmpr) > 0.15:
-		move(delta, sign(cmpr)*Vector3(0, 0, 1))
+	if abs(pid_output) > 0.15:
+		move(delta, sign(pid_output)*Vector3(0, 0, 1))
 	
-	
+	return [err, pid_output]
 
 var cum_err_x: float = 0
 var last_err_x: float = 0
@@ -77,15 +88,17 @@ func proccess_x(delta):
 	last_err_x = err
 	
 	# Output value
-	var cmpr = p + cum_err_x + d
+	var pid_output = p + cum_err_x + d
 	
 	# Debugging
-	iter_x += 1
+	iter_x += 0
 	if iter_x % 10 == 0:
-		print([p, cum_err_x, d, cmpr])
+		pass
+		#print([p, cum_err_x, d, pid_output])
 
 	# Deadzone
-	if abs(cmpr) > 0.1:
-		move(delta, sign(cmpr)*Vector3(1, 0, 0))
+	if abs(pid_output) > 0.1:
+		move(delta, sign(pid_output)*Vector3(1, 0, 0))
 	
+	return [err, pid_output]
 	
