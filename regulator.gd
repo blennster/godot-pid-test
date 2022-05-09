@@ -5,8 +5,8 @@ extends "res://omnibot.gd"
 # var b = "text"
 var pendulum : Spatial
 var P = 20
-var I = 15
-var D = 1.6
+var I = 18
+var D = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,12 +27,11 @@ func _process(delta):
 	if Input.is_action_pressed("reload_scene"):
 		get_tree().reload_current_scene()
 	
-	if enable:
-		x = proccess_x(delta)
-		y = proccess_z(delta)
-		if cum_delta > 0.05:
-			cum_delta = 0
-			print([x, y])
+	if enable && cum_delta > 0.05:
+		x = proccess_x(cum_delta)
+		y = proccess_z(cum_delta)
+		print([x, y])
+		cum_delta = 0
 
 var cum_err_z: float = 0
 var last_err_z: float = 0
